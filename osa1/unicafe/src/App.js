@@ -1,11 +1,21 @@
 import { useState } from 'react'
 
 const StatisticLine = (props) => {
-  return (
-    <div>
-    <p>{props.text} {props.value}</p>
-  </div>
-  )
+  if (props.text == 'positive') {
+    return (
+      <tr>
+        <td>{props.text}</td>
+        <td>{props.value} %</td>
+      </tr>
+    )
+  } else {
+    return (
+        <tr>
+          <td>{props.text}</td>
+          <td>{props.value}</td>
+        </tr>
+    )
+  }
 }
 
 const All = (props) => {
@@ -37,16 +47,23 @@ const Statistics = (props) => {
   } else {
     const all = <All allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} />
     const avg = <Avg allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} />
-    const pos = <Pos allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} />
+    const pos = <Pos allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} /> // percentage character!!
+    
+
 
     return (
         <div>
-          <StatisticLine text="good" value={props.good} />
-          <StatisticLine text="neutral" value={props.neutral} />
-          <StatisticLine text="bad" value={props.bad} />
-          <StatisticLine text="all" value={all} />
-          <StatisticLine text="average" value={avg} />
-          <StatisticLine text="positive" value={pos } />
+          <table>
+            <tbody>
+            <StatisticLine text="good" value={props.good} />
+            <StatisticLine text="neutral" value={props.neutral} />
+            <StatisticLine text="bad" value={props.bad} />
+            <StatisticLine text="all" value={all} />
+            <StatisticLine text="average" value={avg} />
+            <StatisticLine text="positive" value={pos} />
+            </tbody>
+          </table>
+
         </div> 
       )
     }

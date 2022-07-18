@@ -1,43 +1,45 @@
 import { useState } from 'react'
 
-const All = (props) => {
-  return (
-    <div>
-      <p>{props.text} {props.allClicks.length}</p>
-    </div>
-  )
-}
-
-const Avg = (props) => {
-  const avg = (props.good * 1 + props.bad * -1) / props.allClicks.length
-  if (props.allClicks.length == 0) {
+const Statistics = (props) => {
+  if (props.text == "all") {
     return (
       <div>
-        <p>average 0</p>
+        <p>{props.text} {props.allClicks.length}</p>
       </div>
     )
   }
-  return (
-    <div>
-      <p>average {avg}</p>
-    </div>
-  )
-}
 
-const Pos = (props) => {
-  const percent = props.good / props.allClicks.length * 100
-  if (props.allClicks.length == 0) {
+  if (props.text == "avg") {
+    const avg = (props.good * 1 + props.bad * -1) / props.allClicks.length
+    if (props.allClicks.length == 0) {
+      return (
+        <div>
+          <p>average 0</p>
+        </div>
+      )
+    }
     return (
       <div>
-        <p>positive 0</p>
+        <p>average {avg}</p>
       </div>
     )
   }
-  return (
-    <div>
-      <p>positive {percent} %</p>
-    </div>
-  )
+
+  if (props.text == "pos") {
+    const percent = props.good / props.allClicks.length * 100
+    if (props.allClicks.length == 0) {
+      return (
+        <div>
+          <p>positive 0</p>
+        </div>
+      )
+    }
+    return (
+      <div>
+        <p>positive {percent} %</p>
+      </div>
+    )
+  }
 
 }
 
@@ -76,13 +78,15 @@ const App = () => {
         <Button handleClick={handleNeutral} text='neutral' />
         <Button handleClick={handleBad} text='bad' />
       </div>
-      <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <All text="all" allClicks={allClicks}/>
-      <Avg text="avg" allClicks={allClicks} good={good} neutral={neutral} bad={bad} />
-      <Pos text="pos" allClicks={allClicks} good={good}/>
+      <div>
+        <h1>statistics</h1>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+        <Statistics text="all" allClicks={allClicks} good={good} neutral={neutral} bad={bad} />
+        <Statistics text="avg" allClicks={allClicks} good={good} neutral={neutral} bad={bad} />
+        <Statistics text="pos" allClicks={allClicks} good={good} neutral={neutral} bad={bad} />
+      </div>
 
     </div>
   )

@@ -6,6 +6,7 @@ const Button = ({ handleClick, text }) => (
   </button>
 )
 
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -16,21 +17,34 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.'
   ]
-   
-  const [selected, setSelected] = useState(0)
 
-  const handleClick = () => {
-    setSelected(Math.floor(Math.random() * anecdotes.length)) 
-    console.log(selected, anecdotes[selected])
+  const [selected, setSelected] = useState(0)
+  const [vote, setVote] = useState(new Uint8Array(7))
+
+  const handleAnecdote = () => {
+    let number = selected
+    while (number === selected) {
+      number = Math.floor(Math.random() * 6)
+    }
+    setSelected(number)
+  }
+
+  const handleVote = () => {
+    const copy = [...vote]
+    let copy_i = copy[selected]
+    copy_i += 1
+
+    copy[selected] = copy_i
+
+    setVote(copy)
   }
 
   return (
     <div>
       {anecdotes[selected]}
-      <div>
-        <Button handleClick={handleClick} text='next anecdote' />
-      </div>
-
+      <p>has {vote[selected]} votes</p>
+      <Button handleClick={handleVote} text='vote' />
+      <Button handleClick={handleAnecdote} text='next anecdote' />
     </div>
   )
 }

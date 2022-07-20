@@ -47,7 +47,7 @@ const Statistics = (props) => {
   } else {
     const all = <All allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} />
     const avg = <Avg allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} />
-    const pos = <Pos allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} /> // percentage character!!
+    const pos = <Pos allClicks={props.allClicks} good={props.good} neutral={props.neutral} bad={props.bad} /> 
     
 
 

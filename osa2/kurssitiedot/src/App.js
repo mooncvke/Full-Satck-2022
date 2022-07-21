@@ -1,42 +1,10 @@
-const Header = (props) => {
-  return (
-    <div>
-      <h1>{props.course}</h1>
-    </div>
-  )
-}
-
-const Content = (props) => {
-  console.log(props)
-  return (
-    <div>
-      <Part content={props.parts[0].name} amount={props.parts[0].exercises} />
-      <Part content={props.parts[1].name} amount={props.parts[1].exercises} />
-      <Part content={props.parts[2].name} amount={props.parts[2].exercises} />
-    </div>
-  )
-}
-
-const Total = (props) => {
-  console.log(props)
-  return (
-    <div>
-      <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises +props.parts[2].exercises}</p>
-    </div>
-  )
-
-}
-
-const Part = (props) => {
-  return (
-    <div>
-      <p>{props.content} {props.amount}</p>
-    </div>
-  )
-}
-
 const Course = (props) => {
   const course = props.course
+  let total = 0
+
+  {course.parts.map((exercise, i) => (
+    total += course.parts[i].exercises
+  ))}
 
   return(
     <div>
@@ -44,11 +12,12 @@ const Course = (props) => {
 
       {course.parts.map((part, i) => (
         <p key={part.id}> {course.parts[i].name} {course.parts[i].exercises}</p>
-      ))}  
+      ))}
+
+
+      <h4>total of {total} exercises</h4>  
     </div>
-
   )
-
 }
 
 const App = () => {
@@ -70,6 +39,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }

@@ -1,10 +1,10 @@
 const Course = (props) => {
   const course = props.course
-  let total = 0
 
-  {course.parts.map((exercise, i) => (
-    total += course.parts[i].exercises
-  ))}
+  const total = course.parts.reduce(
+    (previousTotal, currentTotal) => previousTotal + currentTotal.exercises, 0
+  )
+
 
   return(
     <div>

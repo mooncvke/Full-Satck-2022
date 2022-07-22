@@ -7,12 +7,11 @@ const Header = ({course}) => {
 }
 
 const Content = ({course}) => {
-  console.log(course.parts[0])
   return (
     <div>
-      <Part part={course.parts[0]} />
-      <Part part={course.parts[1]} />
-      <Part part={course.parts[2]} />
+      {course.parts.map(part => (
+          <Part key={part.id} part={part} />
+      ))}
     </div>
   )
 }
@@ -41,7 +40,6 @@ const Course = ({course}) => {
     <div>
       <Header course={course} />
       <Content course={course} />
-      <Total course={course} />
     </div>
 
   )

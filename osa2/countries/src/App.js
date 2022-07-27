@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const Country = ({ filtered, countries }) => {
-
-   if (filtered().map((country, index) => (
-      <div key={index}></div>,
+   if (filtered().map((country) => (
       countries.find(element => element.name.official === filtered()))).length > 10) {
       return (
         <div>Too many matches, specify another filter</div>
@@ -30,9 +28,9 @@ const Country = ({ filtered, countries }) => {
           </p>
           <h3>languages:</h3>
           <ul>
-            {(Object.keys(country.languages)).map(language => (
+            {(Object.keys(country.languages)).map((language, index) => (
               console.log(country.languages.language),
-              <li key={language.id}>{country.languages[language]}</li>
+              <li key={index}>{country.languages[language]}</li>
             ))}
           </ul>
           
@@ -42,8 +40,8 @@ const Country = ({ filtered, countries }) => {
     } else {
       return (
         <div>
-          {filtered().map((country) => (
-            <div>{country.name.common}</div>
+          {filtered().map((country, index) => (
+            <div key={index}>{country.name.common}</div>
           ))}
         </div>
       ) 

@@ -1,7 +1,26 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const Country = ({ filtered, countries }) => {
+const CreateButtons = ({ filtered, setNewFilter }) => {
+  const click = (event) => {
+    event.preventDefault()
+    console.log('clicked', event.target.value)
+    setNewFilter(event.target.value)  
+  }
+  return (
+    <div>
+      {filtered().map((country, index) => (
+        <form key={index} >
+          {country.name.common}
+          {console.log(country)}
+          <button onClick={click} value={country.name.common}>show </button>
+        </form>
+      ))}
+    </div>
+  )
+}
+
+const Country = ({ filtered, countries, setNewFilter }) => {
    if (filtered().map((country) => (
       countries.find(element => element.name.official === filtered()))).length > 10) {
       return (
@@ -32,18 +51,13 @@ const Country = ({ filtered, countries }) => {
               console.log(country.languages.language),
               <li key={index}>{country.languages[language]}</li>
             ))}
-          </ul>
-          
+          </ul>          
           <img src={country.flags.png}></img>  
         </div>
         )
     } else {
       return (
-        <div>
-          {filtered().map((country, index) => (
-            <div key={index}>{country.name.common}</div>
-          ))}
-        </div>
+        <CreateButtons filtered={filtered} setNewFilter={setNewFilter}/>
       ) 
     }
 }
@@ -54,12 +68,12 @@ const Filter = ({ newFilter, handleFilterChange }) => {
   )
 }
 
-const FindCountries = ({ countries, newFilter }) => {
+const FindCountries = ({ countries, newFilter, setNewFilter }) => {
   const filtered = () => 
     countries.filter((country) => country.name.common.toLowerCase().includes(newFilter.toLowerCase()))
   return (
     <div>
-      <Country filtered={filtered} countries={countries}/>
+      <Country filtered={filtered} countries={countries} setNewFilter={setNewFilter}/>
     </div>
   )
 }
@@ -85,10 +99,12 @@ const App = () => {
 
   }
 
+
+
   return (
     <div>
       <Filter newFilter={newFilter} handleFilterChange={handleFilterChange} />
-      <FindCountries countries={countries} newFilter={newFilter} />
+      <FindCountries countries={countries} newFilter={newFilter} setNewFilter={setNewFilter} />
     </div>
   )
 }

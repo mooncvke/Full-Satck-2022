@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import Persons from "./components/Persons";
+import ShowPersons from "./components/ShowPersons";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import personService from "./services/persons";
+
+const DeletePerson = () => {};
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -70,7 +72,7 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons persons={persons} newFilter={newFilter} />
+      <ShowPersons persons={persons} newFilter={newFilter} />
     </div>
   );
 };

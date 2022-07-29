@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import ShowPersons from "./components/ShowPersons";
 import PersonForm from "./components/PersonForm";
@@ -30,9 +29,28 @@ const App = () => {
 
     {
       if (persons.some((person) => person.name === newName)) {
-        alert(`${newName} is already added to phonebook`);
-        setNewName("");
-        setNewNumber("");
+        if (
+          window.confirm(
+            `${newName} is already added to phonebook, replace the old number with a new one`
+          ) === true
+        ) {
+          console.log(
+            "here i am going. index:  ",
+            persons.findIndex((person) => person.name === newName)
+          );
+          personService
+            .update(
+              persons.findIndex((person) => person.name === newName) + 1,
+              personObject.name,
+              personObject.number
+            )
+            .then((response) => {
+              console.log(response.data);
+            });
+
+          setNewName("");
+          setNewNumber("");
+        }
       } else {
         personService.create(personObject).then((response) => {
           setPersons(persons.concat(response.data));

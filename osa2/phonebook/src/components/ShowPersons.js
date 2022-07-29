@@ -1,7 +1,7 @@
 import React from "react";
 import Person from "./Person";
 
-const ShowPersons = ({ persons, newFilter }) => {
+const ShowPersons = ({ persons, newFilter, setMessage }) => {
   const peopleToShow = () =>
     persons.filter((person) =>
       person.name.toLowerCase().includes(newFilter.toLowerCase())
@@ -14,7 +14,7 @@ const ShowPersons = ({ persons, newFilter }) => {
           key={person.id}
           person={person}
           persons={persons}
-          newFilter={newFilter}
+          setMessage={setMessage}
         />
       ))}
     </div>

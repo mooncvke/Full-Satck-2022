@@ -24,13 +24,22 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
+      id: persons.length + 1,
     };
 
-    personService.create(personObject).then((response) => {
-      setPersons(persons.concat(response.data));
-      setNewName("");
-      setNewNumber("");
-    });
+    {
+      if (persons.some((person) => person.name === newName)) {
+        alert(`${newName} is already added to phonebook`);
+        setNewName("");
+        setNewNumber("");
+      } else {
+        personService.create(personObject).then((response) => {
+          setPersons(persons.concat(response.data));
+          setNewName("");
+          setNewNumber("");
+        });
+      }
+    }
   };
   const handleNameChange = (event) => {
     console.log(event.target.value);

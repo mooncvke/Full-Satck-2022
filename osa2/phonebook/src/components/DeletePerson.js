@@ -1,7 +1,7 @@
 import React from "react";
 import personService from "./../services/persons";
 
-const DeletePerson = ({ person, persons, setMessage }) => {
+const DeletePerson = ({ person, persons, setMessage, setPersons }) => {
   const click = (event) => {
     event.preventDefault();
     console.log("clicked", event.target.value);
@@ -9,6 +9,9 @@ const DeletePerson = ({ person, persons, setMessage }) => {
       personService.deleteId(event.target.value).then((response) => {
         persons.splice(event.target.value - 1, 1);
         console.log(persons);
+        personService.getAll().then((response) => {
+          setPersons(response.data);
+        });
         setMessage(`Deleted ${person.name}`);
         setTimeout(() => {
           setMessage(null);

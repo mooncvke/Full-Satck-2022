@@ -10,6 +10,7 @@ const create = (newObject) => {
 };
 
 const update = (id, newName, newNumber) => {
+  console.log(`${baseUrl}/${id}`);
   return axios.put(`${baseUrl}/${id}`, { name: newName, number: newNumber });
 };
 

@@ -5,6 +5,7 @@ import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import personService from "./services/persons";
 import Notification from "./components/Notification";
+import ErrorNotification from "./components/ErrorNotification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,6 +13,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [newFilter, setNewFilter] = useState("");
   const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((response) => {
@@ -34,10 +36,9 @@ const App = () => {
             `${newName} is already added to phonebook, replace the old number with a new one`
           ) === true
         ) {
-          console.log(
-            "here i am going. index:  ",
-            persons.findIndex((person) => person.name === newName)
-          );
+          personService.getAll().then((response) => {
+            setPersons(response.data);
+          });
           personService
             .update(
               persons.findIndex((person) => person.name === newName) + 1,
@@ -46,17 +47,31 @@ const App = () => {
             )
             .then((response) => {
               console.log(response.data);
+              personService.getAll().then((response) => {
+                setPersons(response.data);
+              });
+              setMessage(`Updated ${newName}'(s) number`);
+              setTimeout(() => {
+                setMessage(null);
+              }, 3000);
+              setNewName("");
+              setNewNumber("");
+            })
+            .catch((error) => {
+              setError(
+                `Information about ${personObject.name} has already been removed from the server`
+              );
+              setTimeout(() => {
+                setError(null);
+              }, 3000);
             });
-          setMessage(`Updated ${newName}'(s) number`);
-          setTimeout(() => {
-            setMessage(null);
-          }, 3000);
-          setNewName("");
-          setNewNumber("");
         }
       } else {
         personService.create(personObject).then((response) => {
           setPersons(persons.concat(response.data));
+          personService.getAll().then((response) => {
+            setPersons(response.data);
+          });
           setMessage(`Added ${newName}`);
           setTimeout(() => {
             setMessage(null);
@@ -86,6 +101,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={message} setMessage={setMessage} />
+      <ErrorNotification error={error} seError={setError} />
       <Filter newFilter={newFilter} handleFilterChange={handleFilterChange} />
 
       <h2>Add a new</h2>
@@ -102,6 +118,7 @@ const App = () => {
         persons={persons}
         newFilter={newFilter}
         setMessage={setMessage}
+        setPersons={setPersons}
       />
     </div>
   );

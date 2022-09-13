@@ -39,12 +39,10 @@ const App = () => {
           personService.getAll().then((response) => {
             setPersons(response.data);
           });
+          const person = persons.find((person) => person.name === newName);
+          const changedPerson = { ...person, number: newNumber };
           personService
-            .update(
-              persons.findIndex((person) => person.name === newName) + 1,
-              personObject.name,
-              personObject.number
-            )
+            .update(changedPerson)
             .then((response) => {
               console.log(response.data);
               personService.getAll().then((response) => {
@@ -67,18 +65,25 @@ const App = () => {
             });
         }
       } else {
-        personService.create(personObject).then((response) => {
-          setPersons(persons.concat(response.data));
-          personService.getAll().then((response) => {
-            setPersons(response.data);
+        personService
+          .create(personObject)
+          .then((response) => {
+            personService.getAll().then((response) => {
+              setPersons(response.data);
+            });
+            setMessage(`Added ${newName}`);
+            setTimeout(() => {
+              setMessage(null);
+            }, 3000);
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch((error) => {
+            setError(error.response.data.error);
+            setTimeout(() => {
+              setError(null);
+            }, 4000);
           });
-          setMessage(`Added ${newName}`);
-          setTimeout(() => {
-            setMessage(null);
-          }, 3000);
-          setNewName("");
-          setNewNumber("");
-        });
       }
     }
   };

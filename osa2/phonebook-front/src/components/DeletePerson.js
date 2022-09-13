@@ -7,7 +7,6 @@ const DeletePerson = ({ person, persons, setMessage, setPersons }) => {
     console.log("clicked", event.target.value);
     if (window.confirm(`Delete ${person.name} ?`) === true) {
       personService.deleteId(event.target.value).then((response) => {
-        persons.splice(event.target.value - 1, 1);
         console.log(persons);
         personService.getAll().then((response) => {
           setPersons(response.data);

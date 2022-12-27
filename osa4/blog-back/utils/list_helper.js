@@ -1,4 +1,4 @@
-const blog = require("../models/blog");
+const logger = require("./logger");
 
 const dummy = (blogs) => {
   return 1;
@@ -6,27 +6,28 @@ const dummy = (blogs) => {
 
 const totalLikes = (blogs) => {
   let likes = 0;
-
-  blogs.map((blog) => (likes += blog.likes));
-
+  blogs.map((blog) => {
+    likes += blog.likes;
+  });
   return likes;
 };
 
-const mostLikes = (blogs) => {
-  var likes = 0;
-
+const favoriteBlog = (blogs) => {
+  if (blogs === null) {
+    logger.info("Empty blog list");
+    return;
+  }
+  let favorite = blogs[0];
   blogs.map((blog) => {
-    if (blog.likes > likes) {
-      likes = blog.likes;
+    if (blog.likes > favorite.likes) {
+      favorite = blog;
     }
   });
-  const blogMostLikes = blogs.find((blog) => blog.likes === likes);
-
-  return blogMostLikes;
+  return favorite;
 };
 
 module.exports = {
   dummy,
   totalLikes,
-  mostLikes,
+  favoriteBlog,
 };

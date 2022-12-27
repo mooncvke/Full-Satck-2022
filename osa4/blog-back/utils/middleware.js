@@ -17,13 +17,6 @@ const tokenExtractor = (request, response, next) => {
   next();
 };
 
-const userExtractor = (request, response, next) => {
-  const savedBlog = Blog.findById(request.params._id);
-  console.log("saved blog: ", savedBlog.user);
-  request.user = savedBlog.user;
-  next();
-};
-
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
 };
@@ -45,7 +38,6 @@ const errorHandler = (error, request, response, next) => {
 
 module.exports = {
   requestLogger,
-  userExtractor,
   tokenExtractor,
   unknownEndpoint,
   errorHandler,

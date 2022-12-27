@@ -50,8 +50,7 @@ blogsRouter.post("/", async (request, response) => {
 
 blogsRouter.delete("/:id", async (request, response) => {
   const decodedToken = jwt.verify(request.token, process.env.SECRET);
-  console.log("request: ", request.params.id); // etsi kuka on alunperin postannu tän blogin
-  console.log("decodedtoken: (tuulipuulin id) ", decodedToken.id);
+
   const savedBlog = await Blog.findById(request.params.id);
 
   if (savedBlog.user.toString() !== decodedToken.id.toString()) {

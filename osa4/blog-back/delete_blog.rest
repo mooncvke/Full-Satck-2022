@@ -1,4 +1,0 @@
-DELETE http://localhost:3001/api/blogs/63aad2e853055c8c152f9aaa
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InR1dWxpdmlpcmkiLCJpZCI6IjYzYWFjNTk2YzU4NGZmODZiM2VkZWMzYiIsImlhdCI6MTY3MjEzNjA4OX0.0bu83pwxjbD_Pxur1xtb18CEL4acuGuzaIgp9znx8lI
-
-// tuuliviiri

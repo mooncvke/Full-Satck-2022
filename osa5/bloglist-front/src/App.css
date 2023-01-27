@@ -1,0 +1,29 @@
+
+
+.Title {
+    color: black;
+    background-color: pink;
+    padding: 10px;
+}
+
+.Notification {
+    color: green;
+    background-color: lightgrey;
+
+    outline-color: green;
+    font-size: 20px;
+      border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.ErrorMessage {
+  color: red;
+  background-color: lightgrey;
+  outline-color: red;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}

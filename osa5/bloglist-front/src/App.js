@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import "./App.css"
 import Blog from "./components/Blog";
+import NewBlog from "./components/NewBlog"
 import Notification from "./components/Notification";
+import ErrorMessage from "./components/ErrorMessage"
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -9,6 +12,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
@@ -37,7 +41,7 @@ const App = () => {
       window.localStorage.setItem("loggedBlogsListUser", JSON.stringify(user));
       blogService.setToken(user.token);
     } catch (expection) {
-      setErrorMessage("wrong credentials");
+      setErrorMessage("wrong username or password");
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -50,6 +54,23 @@ const App = () => {
     window.localStorage.clear();
     setUser(null);
   };
+
+  const addBlog = async blogObject => {
+    try {
+      await blogService.post(blogObject)
+      console.log("add blog: ", blogObject.title)
+      blogService.getAll().then(blogs => setBlogs(blogs))
+      setMessage(`A new blog "${blogObject.title}" by ${blogObject.author} was added`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    } catch (exception) {
+      setErrorMessage('Invalid blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
 
   const loginForm = () => (
     <div>
@@ -77,24 +98,28 @@ const App = () => {
       </form>
     </div>
   );
+  const newBlogForm = () => <NewBlog newBlogObject={addBlog} />
 
   const blogsForm = () => (
     <div>
-      <h2>Blogs</h2>
-
+      <h2 className='Title'>Blogs</h2>
       <p>
         {user.name} logged in <button onClick={handleLogout}>logout</button>
       </p>
-
+      <h3>Add blog</h3>
+      {newBlogForm()}
+<br />
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
+   
     </div>
   );
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <ErrorMessage message={errorMessage} />
+      <Notification message={message} />
       {user === null ? loginForm() : blogsForm()}
     </div>
   );

@@ -18,9 +18,23 @@ const post = async (newObject) => {
   return response.data;
 };
 
-const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
-  return request.then(response => response.data)
-}
+const update = async (id, newObject) => {
+  try {
+    const res = await axios.put(`${baseUrl}/${id}`, newObject);
+    return res.data;
+  } catch (err) {
+    return console.log("Error in blogs service update", err);
+  }
+};
 
-export default { getAll, setToken, post, update }
+const remove = async (id) => {
+  try {
+    const config = { headers: { Authorization: token } };
+    const response = axios.delete(`${baseUrl}/${id}`, config);
+    return response.data;
+  } catch (err) {
+    return console.log("Error in blogs service remove ", err);
+  }
+};
+
+export default { getAll, setToken, post, update, remove };

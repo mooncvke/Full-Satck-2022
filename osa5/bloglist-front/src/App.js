@@ -31,6 +31,9 @@ const App = () => {
     }
   }, []);
 
+  //Sort the blogs by most likes
+  blogs.sort((a, b) => b.likes - a.likes);
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -61,10 +64,7 @@ const App = () => {
 
   const addBlog = async (blogObject) => {
     try {
-      setCreateVisible(false);
       await blogService.post(blogObject);
-
-      console.log("add blog: ", blogObject.title);
       blogService.getAll().then((blogs) => setBlogs(blogs));
       setMessage(
         `A new blog "${blogObject.title}" by ${blogObject.author} was added`
@@ -134,6 +134,7 @@ const App = () => {
 
   const deleteBlog = async (id) => {
     await blogService.remove(id);
+    console.log("blog deleted: ", id);
     setBlogs(blogs.filter((blog) => blog.id !== id));
   };
 

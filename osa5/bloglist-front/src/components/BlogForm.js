@@ -7,6 +7,7 @@ const BlogForm = ({ blog, changedBlog, deleteBlog, username }) => {
     padding: "5px",
     margin: "10px",
   };
+
   const [blogVisible, setBlogVisible] = useState(false);
   const [buttonLabel, setButtonLabel] = useState("View");
 
@@ -44,7 +45,6 @@ const BlogForm = ({ blog, changedBlog, deleteBlog, username }) => {
 
   return (
     <div>
-      {console.log("username: ", username)}
       <div style={hideWhenVisible}>
         <div style={blogStyle}>
           {blog.title} {blog.author} {}

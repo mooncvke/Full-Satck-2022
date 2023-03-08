@@ -1,18 +1,16 @@
-
-
 .Title {
-    color: black;
-    background-color: pink;
-    padding: 10px;
+  color: black;
+  background-color: pink;
+  padding: 10px;
 }
 
 .Notification {
-    color: green;
-    background-color: lightgrey;
+  color: green;
+  background-color: lightgrey;
 
-    outline-color: green;
-    font-size: 20px;
-      border-style: solid;
+  outline-color: green;
+  font-size: 20px;
+  border-style: solid;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;

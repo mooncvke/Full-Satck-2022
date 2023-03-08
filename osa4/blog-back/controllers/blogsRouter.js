@@ -24,6 +24,21 @@ blogsRouter.get("/:id", async (request, response) => {
   }
 });
 
+blogsRouter.put("/:id", async (request, response) => {
+  const body = request.body;
+
+  const blog = {
+    author: body.author,
+    title: body.title,
+    url: body.url,
+    likes: body.likes,
+  };
+
+  await Blog.findByIdAndUpdate(request.params.id, blog, { new: true });
+  const savedBlog = await Blog.findById(request.params.id);
+  response.json(savedBlog.toJSON());
+});
+
 blogsRouter.post("/", async (request, response) => {
   const body = request.body;
   if (!body.likes) {

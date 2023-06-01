@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import filterReducer, { createFilter } from "../reducers/filterReducer";
+import { createFilter } from "../reducers/filterReducer";
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector((state) => state.filterReducer);
+  const filter = useSelector((state) => state.filter);
 
   const handleChange = (event) => {
     // input-kentän arvo muuttujassa event.target.value
